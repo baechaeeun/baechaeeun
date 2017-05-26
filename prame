@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<unistd.h>
+#define N 30
+
+
+
+
+int main()
+{
+        int map[N][N];
+        int i,j,x,y,hum_x,hum_y,name,a,b,c;
+
+
+        printf("Start....\ninput name : ");
+        scanf("%c",&name);
+        system("clear");
+        printf("1.New_game\n2.Saved_game\n3.rank\n4.menu\n\niput num : ");
+        
+        scanf("%d",&a);
+        switch(a)
+        case 1:
+                system("clear")
+                New_game();
+                break;
+
+        case 2:
+                Saved_game();
+                break;
+
+        case 3:
+                FILE *rank;
+                rank = fopen("rank","r");
+                system("cat rank");
+                menu();
+                fclose(rank);
+                        break;
+        case 4:
+                menu();
+                break;
+        default:
+                printf("\n please put '1~4', show menu put 'm'");
