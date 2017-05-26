@@ -1,0 +1,92 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<unistd.h>
+#include<termio.h>
+
+#define N 30
+
+
+int menu(){return 0;}
+int New_game(){return 0;}
+int Saved_game(){return 0;}
+int ch_count()
+{
+        FILE *save;
+        int c,ch_count=0;
+        save = fopen("save_name","r");
+        while((c = getc(save)) != EOF){
+                        if(c == '\n')
+                                ;
+                        else
+                                ch_count++;
+                                }
+        fclose(save);
+        return ch_count;
+}
+
+int getch(void)
+{
+        int ch;
+
+        struct termios buf;
+        struct termios save;
+
+        tcgetattr(0, &save);
+        buf = save;
+
+        buf.c_lflag&=~(ICANON|ECHO);
+        buf.c_cc[VMIN] = 1;
+        buf.c_cc[VTIME] = 0;
+
+        tcsetattr(0, TCSAFLUSH, &buf);
+
+        ch = getchar();
+        tcsetattr(0, TCSAFLUSH, &save);
+
+        return ch;
+}
+
+int main()
+{
+        FILE *sival;
+        FILE *rank;
+        int map[N][N];
+        int name;
+        int i=0,j=0,x,y,hum_x,hum_y,name_1,a,b,c,trash;
+        sival = fopen("save_name","w");
+        system("clear");
+        printf("Start....\ninput name : ");
+        scanf("%c",name);
+        scanf("%c",trash);
+        fprintf(sival,"%c",name);
+        fclose(sival);
+
+        name_1 = ch_count();
+
+        system("clear");
+        printf("%d",name_1);
+        printf("1.New_game\n2.Saved_game\n3.rank\n4.menu\n\nput num : ");
+        switch(a){
+            case 1:
+                system("clear");
+                New_game();
+                break;
+       case 2:
+           Saved_game();
+           break;
+       case 3:
+           rank = fopen("rank","r");
+           system("cat rank");
+           menu();
+           fclose(rank);
+           break;
+       case 4:
+           menu();
+           break;
+       default:
+           printf("\n please put '1~4', show menu put 'm'");
+           break;
+        }
+        return 0;
+}
